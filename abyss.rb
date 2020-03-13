@@ -35,7 +35,7 @@ class Abyss < Formula
   def install
     ENV.delete("HOMEBREW_SDKROOT") if MacOS.version >= :mojave && MacOS::CLT.installed?
     system "./autogen.sh" if build.head?
-    system "./configure", "--enable-maxk=300",
+    system "./configure", "--enable-maxk=320",
                           "--prefix=#{prefix}",
                           "--with-boost=#{Formula["boost"].include}",
                           "--with-mpi=#{Formula["open-mpi"].prefix}",
