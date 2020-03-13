@@ -42,7 +42,8 @@ class Abyss < Formula
                           "--with-sparsehash=#{Formula["google-sparsehash"].prefix}",
                           "--disable-dependency-tracking",
                           "--disable-silent-rules"
-    system "make j64", "install"
+    system "make", "j64"
+    system "make", "install"
   end
 
   test do
