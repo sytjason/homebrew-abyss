@@ -1,29 +1,7 @@
 class Abyss < Formula
   desc "Genome sequence assembler for short reads"
   homepage "https://www.bcgsc.ca/resources/software/abyss"
-  url "https://github.com/bcgsc/abyss/releases/download/2.2.4/abyss-2.2.4.tar.gz"
-  sha256 "f064a8c5ad152a37963d9001df6c89d744370f7ec5a387307747c4647360a47c"
-
-  bottle do
-    cellar :any
-    sha256 "800aa54afd53c585943f86d701ca58a95059577181fdb4a47bf9f08b249e230e" => :catalina
-    sha256 "03e6dc19bfb76f35b4b35c5fb65c88ea4fa28b3c3e112727465a7a5e2fd5ee09" => :mojave
-    sha256 "9ce078498ce23f6a894ca79dd21bee8c6c7e24aeb0ae95d3ccd7091fc55091a2" => :high_sierra
-    sha256 "bb18910cd175d7d87c8f10abfd3232fd189768563bde0331a95e30358255094a" => :x86_64_linux
-  end
-
-  head do
-    url "https://github.com/bcgsc/abyss.git"
-
-    depends_on "autoconf" => :build
-    depends_on "automake" => :build
-    depends_on "multimarkdown" => :build
-  end
-
-  depends_on "boost" => :build
-  depends_on "google-sparsehash" => :build
-  depends_on "gcc" if OS.mac?
-  depends_on "open-mpi"
+  url "https://github.com/sytjason/abyss/archive/study.zip"
 
   fails_with :clang # no OpenMP support
 
@@ -35,15 +13,14 @@ class Abyss < Formula
   def install
     ENV.delete("HOMEBREW_SDKROOT") if MacOS.version >= :mojave && MacOS::CLT.installed?
     system "./autogen.sh" if build.head?
-    system "./configure", "--enable-maxk=320",
+    system "./configure", "--enable-maxk=300",
                           "--prefix=#{prefix}",
                           "--with-boost=#{Formula["boost"].include}",
                           "--with-mpi=#{Formula["open-mpi"].prefix}",
                           "--with-sparsehash=#{Formula["google-sparsehash"].prefix}",
                           "--disable-dependency-tracking",
                           "--disable-silent-rules"
-    system "make", "-j64"
-    system "make", "install"
+    system "make j64", "install"
   end
 
   test do
